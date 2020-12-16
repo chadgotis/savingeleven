@@ -6,6 +6,11 @@ h3 {
   padding-bottom: 1rem;
 }
 
+h5 {
+  font-size: 1.4rem;
+  color: black;
+}
+
 .rating span {
   margin: 0.1rem;
 }
