@@ -49,7 +49,7 @@ const ProfilePage = ({ location, history }) => {
   };
 
   return (
-    <Row>
+    <Row className="mt-3">
       <Col md={3}>
         {message && <Message variant="danger">{message}</Message>}
         {error && <Message variant="danger">{error}</Message>}

@@ -93,7 +93,7 @@ const ProductPage = ({ history, match }) => {
                     <Row>
                       <Col>Price :</Col>
                       <Col>
-                        <strong>${product.price}</strong>
+                        <strong>₱{product.price}</strong>
                       </Col>
                     </Row>
                   </ListGroup.Item>
