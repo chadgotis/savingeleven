@@ -12,8 +12,12 @@ const getUsers = async (req, res) => {
 
 const getUsersById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    res.json(user);
+    const user = await User.findById(req.params.id).select("-password");
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ msg: "User not found" });
+    }
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
@@ -38,7 +42,7 @@ const authUser = async (req, res) => {
       throw new Error("Username or Password Incorrect");
     }
   } catch (error) {
-    res.status(500).json({ msg: error.message });
+    res.status(404).json({ msg: "Username or Password Incorrect" });
   }
 };
 
@@ -53,6 +57,35 @@ const getUserProfile = async (req, res) => {
         email: user.email,
         isAdmin: user.isAdmin,
       });
+    }
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+const updateUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+
+      if (req.body.password) {
+        user.password = req.body.password;
+      }
+
+      const updatedUser = await user.save();
+
+      res.json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        token: generateToken(updatedUser._id),
+      });
+    } else {
+      res.status(404).json({ msg: "Not Found" });
     }
   } catch (error) {
     res.status(500).json({ msg: error.message });
@@ -90,4 +123,59 @@ const registerUser = async (req, res) => {
   }
 };
 
-export { getUsers, getUsersById, authUser, getUserProfile, registerUser };
+const getUsersList = async (req, res) => {
+  try {
+    const users = await User.find();
+
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+const removeUser = async (req, res) => {
+  try {
+    const userExists = await User.findById(req.params.id);
+
+    if (userExists) {
+      await userExists.remove();
+      res.json({ msg: "User Removed" });
+    } else {
+      res.status(404).json({ msg: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+const updateUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      user.isAdmin = req.body.isAdmin;
+
+      const updatedUser = await user.save();
+
+      res.json(updatedUser);
+    } else {
+      res.status(404).json({ msg: "Not Found" });
+    }
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+export {
+  getUsers,
+  getUsersById,
+  authUser,
+  getUserProfile,
+  registerUser,
+  updateUserProfile,
+  getUsersList,
+  removeUser,
+  updateUser,
+};

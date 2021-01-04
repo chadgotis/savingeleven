@@ -6,6 +6,18 @@ import { Container } from "react-bootstrap";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import CartPage from "./pages/CartPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import ProfilePage from "./pages/ProfilePage";
+import ShippingPage from "./pages/ShippingPage";
+import PaymentPage from "./pages/PaymentPage";
+import PlaceOrderPage from "./pages/PlaceOrderPage";
+import OrderPage from "./pages/OrderPage";
+import UsersListPage from "./pages/UsersListPage";
+import UserEditPage from "./pages/UserEditPage";
+import ProductListPage from "./pages/ProductListPage";
+import ProductEditPage from "./pages/ProductEditPage";
+import OrdersListPage from "./pages/OrdersListPage";
 
 const App = () => {
   return (
@@ -13,9 +25,22 @@ const App = () => {
       <Header />
       <main>
         <Container>
-          <Route path="/" component={HomePage} exact />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/profile" component={ProfilePage} />
+          <Route path="/placeorder" component={PlaceOrderPage} />
+          <Route path="/payment" component={PaymentPage} />
+          <Route path="/shipping" component={ShippingPage} />
+          <Route path="/register" component={RegisterPage} />
+          <Route path="/order/:id" component={OrderPage} />
           <Route path="/product/:id" component={ProductPage} />
           <Route path="/cart/:id?" component={CartPage} />
+          <Route path="/admin/userslist" component={UsersListPage} />
+          <Route path="/admin/productlist" component={ProductListPage} />
+          <Route path="/admin/orderlist" component={OrdersListPage} />
+          <Route path="/admin/users/:id/edit" component={UserEditPage} />
+          <Route path="/admin/product/:id/edit" component={ProductEditPage} />
+          <Route path="/search/:keyword" component={HomePage} />
+          <Route path="/" component={HomePage} exact />
         </Container>
       </main>
       <Footer />

@@ -34,7 +34,7 @@ const CartPage = ({ match, location, history }) => {
     dispatch(removeCartItem(id));
   };
   const checkoutHandler = () => {
-    history.push("/");
+    history.push("/login?redirect=shipping");
   };
 
   return (
@@ -96,8 +96,11 @@ const CartPage = ({ match, location, history }) => {
               <ListGroup.Item>
                 <h3>
                   Subtotal (
-                  {cartItems.reduce((acc, item) => acc + item.quantity, 0)})
-                  items
+                  {cartItems.reduce(
+                    (acc, item) => acc + Number(item.quantity),
+                    0
+                  )}
+                  ) items
                 </h3>
                 PHP
                 {cartItems

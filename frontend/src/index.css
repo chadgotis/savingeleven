@@ -14,3 +14,7 @@ h5 {
 .rating span {
   margin: 0.1rem;
 }
+
+.peso-sign {
+  content: "\20B1";
+}

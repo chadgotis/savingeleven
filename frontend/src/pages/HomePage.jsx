@@ -6,13 +6,16 @@ import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../actions/productActions";
 
-const HomePage = () => {
+const HomePage = ({ match }) => {
+  const keyword = match.params.keyword;
+
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
   const { loading, errors, productList } = products;
+
   useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+    dispatch(getProducts(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <>
