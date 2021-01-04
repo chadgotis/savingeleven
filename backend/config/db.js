@@ -4,7 +4,9 @@ const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.OFFLINE_URI, {
       useUnifiedTopology: true,
+
       useNewUrlParser: true,
+
       useCreateIndex: true,
     });
 
